@@ -4,6 +4,11 @@ class Program
 {
     static void Main(string[] args)
     {
+        PersonModel person = new PersonModel { Name = "bob"};
+
+        Console.WriteLine(person.SetDefaultAge().PrintInfo()); 
+
+
         HotelRoomModel room = new HotelRoomModel();
 
         room.TurnOnAir().SetTemperature(72).OpenShades();
@@ -23,11 +28,23 @@ public class HotelRoomModel
     public bool AreShadesOpen { get; set; }
 }
 
+public class PersonModel
+{
+    public string Name { get; set; }
+    public int Age { get; set; }
+}
+
 public static class ExtensionSamples
 {
-    public static void PrintToConsole(this string message)
+    public static PersonModel SetDefaultAge(this PersonModel person)
     {
-        Console.WriteLine(message);
+        person.Age = 30;
+        return person;
+    }
+
+    public static string PrintInfo(this PersonModel person)
+    {
+        return $"{person.Name} : {person.Age}";
     }
 
     public static HotelRoomModel TurnOnAir(this HotelRoomModel room)
@@ -58,5 +75,10 @@ public static class ExtensionSamples
     {
         room.AreShadesOpen = false;
         return room;
+    }
+
+    public static void PrintToConsole(this string message)
+    {
+        Console.WriteLine(message);
     }
 }
